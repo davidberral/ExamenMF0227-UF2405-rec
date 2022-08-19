@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Alquiler;
+import modelo.Asesor;
 import utilidades.ConexionBD;
 
 public class AlquilerDAOMySQL implements AlquilerDAO {
@@ -165,5 +166,42 @@ public class AlquilerDAOMySQL implements AlquilerDAO {
 		return resultado;
 
 	}
+
+
+
+	@Override
+	public List<Alquiler> getListaAlquileres() {
+		List<Alquiler> listaAlquiler = new ArrayList<Alquiler>();
+		Connection con = conexion.getConexion();
+		
+		try {
+			consulta = con.createStatement();
+			resultado = consulta.executeQuery("select * from alquileres");
+			while (resultado.next()) {
+				String alquiler = resultado.getString("regimendelvehiculo");
+				String matricula = resultado.getString("matricula");
+				String tipo = resultado.getString("tipo");
+				Boolean maleteroTecho = resultado.getBoolean("maleterodetecho");
+				Integer numDias = resultado.get("numDias");
+				
+				Alquiler a = new Alquiler( alquiler, matricula,tipo, maletero, precioDia,numDias);
+				listaAlquiler.add(a);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al realizar la consulta sobre alquileres: "+e.getMessage());
+		} finally {
+			try {
+				resultado.close();
+				consulta.close();
+				conexion.desconectar();
+			} catch (SQLException e) {
+				System.out.println("Error al liberar recursos: "+e.getMessage());
+			} catch (Exception e) {
+				
+			}
+		
+	}
+	
+	
 
 }

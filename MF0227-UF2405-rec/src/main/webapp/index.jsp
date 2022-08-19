@@ -7,7 +7,7 @@
 <%@page import="java.util.List" %>
 <jsp:include page="/plantillas/cabecera.jsp"></jsp:include>
 
-<h1>Listado de Asesores</h1>
+<h1>Datos del alquiler</h1>
 <% 
 
 AlquilerDAO alquilerDAO = new AlquilerDAOMySQL();
